@@ -45,7 +45,7 @@ As mentioned above, let's move to `frontend` directory and run that two commands
 
 We will have the UI accessible on http://localhost:5173.
 
-![Default React UI](./01-default-react-ui.png)
+<img src="./01-default-react-ui.png" alt="Default React UI" style="height:600px;"/>
 
 Let's do few things stupid here:
 - Delete `frontend/src/App.css`
@@ -87,7 +87,8 @@ Short explanation:
 - `.render(...)` puts whatever content inside it.
 
 The UI will become as simple as this empty page:
-![Empty web app](./02-empty-web-app.png)
+
+<img src="./02-empty-web-app.png" alt="Empty web app" style="height:600px;"/>
 
 ## Setting Up Routing
 Back to our goals, we wanted to have a `/dashboard` path to be rendered and other URLs to be served using 404 not found page. That goals requires a mechanism called routing. This is very basic, somewhat forgotten, but we will do this as early as possible on our project.
@@ -136,7 +137,8 @@ createRoot(document.getElementById('root')!).render(
 ```
 
 Now, if we save it and try to navigate to http://localhost:5173, the same empty page will be rendered. But, if we try to navigate to http://localhost:5173/dashboard, it will show an error page saying *Unexpected Application Error! 404 Not Found* and tells use to provide **ErrorBoundary** or **errorElement**. We'll get back to that later. For now, let's focus on how to show `/dashboard` first.
-![Empty web app](./03-404.png)
+
+<img src="./03-404.png" alt="Empty web app" style="height:600px;"/>
 
 ### Routing to /dashboard
 This section shows on how render a correct page for `/dashboard` and get rid of the 404 not found page.
@@ -392,7 +394,8 @@ export default function Page() {
 The simple rule is, the `index.tsx` must return an exported React component.
 
 Now, let's head back to our browser and see!
-![sidebar](./04-our-first-sidebar.gif)
+
+<img src="./04-our-first-sidebar.gif" alt="sidebar" style="height:600px;"/>
 
 ### Populate the Sidebar Menu
 I believe you've stopped smiling now because you realized: There's no menu on that sidebar.
@@ -475,4 +478,5 @@ export function AppSidebar() {
 ```
 
 See what happen now!
-![sidebar](./05-sidebar-menu.gif)
+
+<img src="./05-sidebar-menu.gif" alt="sidebar" style="height:600px;"/>

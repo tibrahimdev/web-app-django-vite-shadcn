@@ -1,13 +1,18 @@
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, Navigate, Outlet } from "react-router";
+import { useAuth } from "./auth/AuthProvider";
+
+const ProtectedRoute = () => {
+  const { user } = useAuth();
+  return user ? <Outlet /> : <Navigate to="/login" replace />;
+}
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: "dashboard",
+    element: <ProtectedRoute />,
     children: [
       {
-        path: "dashboard",
-
-        // Added lazy loading component
+        path: "",
         lazy: async () => ({
           Component: (await import("@/pages/dashboard")).default
         }),

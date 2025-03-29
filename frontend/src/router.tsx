@@ -8,6 +8,17 @@ const ProtectedRoute = () => {
 
 export const router = createBrowserRouter([
   {
+    path: "/",
+    children: [
+      {
+        path: "login",
+        lazy: async () => ({
+          Component: (await import("@/pages/auth/login")).default
+        }),
+      }
+    ]
+  },
+  {
     path: "dashboard",
     element: <ProtectedRoute />,
     children: [

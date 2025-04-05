@@ -9,14 +9,14 @@ export const AuthProvider: React.FC<{ adapter: AuthAdapter; children: ReactNode 
 }) => {
   // Initialize token from localStorage for session persistence
   const [accessToken, setAccessToken] = useState<string | null>(() => {
-    return localStorage.getItem("ACCESS_TOKEN");
+    return localStorage.getItem("AccessToken");
   });
 
   // Logs in the user, stores token, and updates state
   const login = async (credentials: any): Promise<LoginResponse> => {
     const { token, message } = await adapter.login(credentials);
     if (token) {
-      localStorage.setItem("ACCESS_TOKEN", token);
+      localStorage.setItem("AccessToken", token);
       setAccessToken(token);
     }
     return { token, message };
@@ -24,7 +24,7 @@ export const AuthProvider: React.FC<{ adapter: AuthAdapter; children: ReactNode 
 
   // Logs out the user and clears authentication state
   const logout = () => {
-    localStorage.removeItem("ACCESS_TOKEN");
+    localStorage.removeItem("AccessToken");
     setAccessToken(null);
     adapter.logout(); // Optional: call adapter logic if needed
   };

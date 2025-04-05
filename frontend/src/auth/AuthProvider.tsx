@@ -1,29 +1,38 @@
-import { createContext, ReactNode, useContext } from "react";
+import { ReactNode, useState } from "react";
 import { AuthAdapter, LoginResponse } from "./adapters/AuthAdapter";
+import { AuthContext } from "./AuthContext";
 
-interface AuthContextType {
-  user: any;
-  login: (credentials: any) => Promise<LoginResponse>;
-  logout: () => void;
-}
+// AuthProvider supplies authentication state and logic to the app
+export const AuthProvider: React.FC<{ adapter: AuthAdapter; children: ReactNode }> = ({
+  adapter,
+  children,
+}) => {
+  // Initialize token from localStorage for session persistence
+  const [accessToken, setAccessToken] = useState<string | null>(() => {
+    return localStorage.getItem("ACCESS_TOKEN");
+  });
 
-const AuthContext = createContext<AuthContextType | null>(null);
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (!context) throw new Error("useAuth must be used within an AuthProvider");
-  return context;
-}
-
-export const AuthProvider: React.FC<{ adapter: AuthAdapter, children: ReactNode }> = ({ adapter, children }) => {
-  console.log("AuthProvider used", adapter)
-
+  // Logs in the user, stores token, and updates state
   const login = async (credentials: any): Promise<LoginResponse> => {
-    const response = await adapter.login(credentials)
-    return response
-  }
+    const { token, message } = await adapter.login(credentials);
+    if (token) {
+      localStorage.setItem("ACCESS_TOKEN", token);
+      setAccessToken(token);
+    }
+    return { token, message };
+  };
 
-  return <AuthContext.Provider value={{ user: null, login, logout: adapter.logout }} >
-    {children}
-  </AuthContext.Provider>
-}
+  // Logs out the user and clears authentication state
+  const logout = () => {
+    localStorage.removeItem("ACCESS_TOKEN");
+    setAccessToken(null);
+    adapter.logout(); // Optional: call adapter logic if needed
+  };
+
+  // Provide authentication state and actions to child components
+  return (
+    <AuthContext.Provider value={{ accessToken, user: null, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};

@@ -1,9 +1,8 @@
 export type UserPasswordLoginCredentials = {email: string, password: string};
 export type LoginCredentials = UserPasswordLoginCredentials;
 
-export type ErrorLoginResponse = {message: string};
-export type SimpleLoginResponse = {token: string}
-export type LoginResponse = SimpleLoginResponse | ErrorLoginResponse;
+export type SimpleLoginResponse = {token: string | null, message: string | null}
+export type LoginResponse = SimpleLoginResponse;
 
 export interface AuthAdapter {
     login: (credentials: LoginCredentials) => Promise<LoginResponse>

@@ -20,7 +20,6 @@ export const AuthProvider: React.FC<{ adapter: AuthAdapter, children: ReactNode 
 
   const login = async (credentials: any): Promise<LoginResponse> => {
     const response = await adapter.login(credentials)
-    console.log(response)
     return response
   }
 
